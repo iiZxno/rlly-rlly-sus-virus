@@ -3,35 +3,119 @@
 <head>
 <title>Happy Birthday Leon</title>
 
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Chewy&display=swap" rel="stylesheet">
+
 <style>
 
 body{
-    background: linear-gradient(to bottom, #031224, #0d2f5e);
+    background: url(Arlecbg.jpg) no-repeat center center fixed;
+    background-size: cover;
     color: white;
     margin: 0;
     font-family: Arial, sans-serif;
+    overflow-x: hidden;
 }
 
+/* STAR BACKGROUND */
+.stars {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.star {
+    position: absolute;
+    background: white;
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: twinkle 3s infinite ease-in-out;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+@keyframes twinkle {
+    0%, 100% {
+        opacity: 0.2;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.4);
+    }
+}
+
+/* TITLE BOX */
+.title-box {
+    position: relative;
+    display: inline-block;
+    padding: 15px 30px;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    margin-bottom: 30px;
+}
+
+/* sparkles */
+.sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    opacity: 0;
+    box-shadow: 0 0 10px rgba(255,255,255,0.9);
+    animation: sparkleFloat 3s infinite ease-in-out;
+}
+
+@keyframes sparkleFloat {
+    0% {
+        transform: translate(0, 0) scale(0.5);
+        opacity: 0;
+    }
+    30% {
+        opacity: 1;
+    }
+    100% {
+        transform: translate(var(--x), var(--y)) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* container */
 .container{
     max-width: 900px;
     margin: auto;
     text-align: center;
     padding: 60px 20px;
+    position: relative;
+    z-index: 2;
 }
 
+/* heading */
 h1{
-    color: orange;
-    text-shadow: 0 0 20px orange;
+    font-family: 'Lavishly Yours', cursive;
+    color: #750202;
+    text-shadow: 0 0 20px #750202;
     font-size: 3rem;
-    margin-bottom: 30px;
+    margin: 0;
 }
 
+/* paragraph */
 p{
-    font-size: 1.2rem;
+    font-family: 'Chewy', cursive;
+    font-size: 1.3rem;
     line-height: 2;
     padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 15px;
 }
 
+/* gallery */
 .gallery{
     display: flex;
     justify-content: center;
@@ -48,18 +132,23 @@ p{
 .sidegif{
     width: 220px;
     border-radius: 15px;
-    box-shadow: 0 0 15px rgba(255,165,0,0.5);
     transition: 0.3s;
+    box-shadow: none;
 }
 
 .sidegif:hover{
     transform: scale(1.05);
 }
 
-.caption{
-    margin-top: 10px;
-    font-size: 1rem;
-    color: #d9e8ff;
+/* signature */
+.signature{
+    position: fixed;
+    bottom: 10px;
+    right: 15px;
+    font-size: 10px;
+    opacity: 0.6;
+    color: white;
+    z-index: 3;
 }
 
 </style>
@@ -67,9 +156,23 @@ p{
 
 <body>
 
+<!-- stars -->
+<div class="stars" id="stars"></div>
+
 <div class="container">
 
-    <h1>Happy Birthday Leon</h1>
+    <!-- TITLE WITH SPARKLES -->
+    <div class="title-box">
+
+        <div class="sparkle" style="top:-10px; left:20%; --x:-20px; --y:-30px; animation-delay:0s;"></div>
+        <div class="sparkle" style="top:10px; right:15%; --x:25px; --y:-40px; animation-delay:0.5s;"></div>
+        <div class="sparkle" style="bottom:5px; left:10%; --x:-30px; --y:20px; animation-delay:1s;"></div>
+        <div class="sparkle" style="bottom:10px; right:20%; --x:30px; --y:25px; animation-delay:1.5s;"></div>
+        <div class="sparkle" style="top:50%; left:-10px; --x:-25px; --y:10px; animation-delay:2s;"></div>
+
+        <h1>Happy Birthday Leon</h1>
+
+    </div>
 
     <p>
         Ngl i didn't know what to make for ur bday, so honestly i decided to create whatever this.
@@ -87,22 +190,43 @@ p{
 
         <div class="character">
             <img class="sidegif" src="childe.jpg" alt="Tartaglia">
-            <div class="caption"></div>
         </div>
 
         <div class="character">
             <img class="sidegif" src="haitham.jpg" alt="Alhaitham">
-            <div class="caption"></div>
         </div>
 
         <div class="character">
             <img class="sidegif" src="zhong.jpg" alt="Zhongli">
-            <div class="caption"></div>
         </div>
 
     </div>
 
 </div>
+
+<div class="signature">-Z</div>
+
+<!-- STAR SCRIPT -->
+<script>
+const starsContainer = document.getElementById("stars");
+const starCount = 70;
+
+for (let i = 0; i < starCount; i++) {
+    const star = document.createElement("div");
+    star.classList.add("star");
+
+    star.style.top = Math.random() * 100 + "vh";
+    star.style.left = Math.random() * 100 + "vw";
+
+    let size = Math.random() * 3 + 2;
+    star.style.width = size + "px";
+    star.style.height = size + "px";
+
+    star.style.animationDelay = Math.random() * 3 + "s";
+
+    starsContainer.appendChild(star);
+}
+</script>
 
 </body>
 </html>
